@@ -1,0 +1,15 @@
+language: java
+
+os: linux
+dist: trusty
+jdk: oraclejdk8
+
+branches:
+  only:
+    - master
+
+before_install:
+  - chmod +x gradlew
+
+script:
+  - ./gradlew build
