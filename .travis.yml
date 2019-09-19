@@ -9,4 +9,5 @@ branches:
     - master
 
 script:
+  - git update-index --chmod=+x gradlew
   - ./gradlew build
