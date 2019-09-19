@@ -1,0 +1,12 @@
+language: java
+
+os: linux
+dist: trusty
+jdk: oraclejdk8
+
+branches:
+  only:
+    - master
+
+script:
+  - ./gradlew build
