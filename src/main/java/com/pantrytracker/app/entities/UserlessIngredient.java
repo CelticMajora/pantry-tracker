@@ -11,7 +11,7 @@ import javax.persistence.Id;
 public class UserlessIngredient {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;	
 	private String email;	
 	private String ingredientName;	

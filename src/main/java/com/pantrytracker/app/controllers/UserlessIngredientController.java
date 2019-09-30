@@ -46,6 +46,7 @@ public class UserlessIngredientController {
 		toStore.setExpirationDate(LocalDate.of(Integer.parseInt(expirationYear),
 				Integer.parseInt(expirationMonth),
 				Integer.parseInt(expirationDayOfMonth)));
+		userlessIngredientRepository.save(toStore);
 		return toStore;
 	}
 	
