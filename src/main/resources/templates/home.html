@@ -3,5 +3,28 @@
 <body>
 <h1>Hello!</h1>
 <p>Welcome to <span th:text="${appName}">Our App</span></p>
+<form action="#" th:action="@{/userlessIngredient}" th:object="${userlessIngredient}" method="post">
+    <table border="1">
+        <tr>
+            <td><label th:text="#{msg.email}" /></td>
+            <td><input type="text" th:field="*{email}" /></td>
+        </tr>
+        <tr>
+            <td><label th:text="#{msg.name}" /></td>
+            <td><input type="text" th:field="*{name}" /></td>
+        </tr>
+        <tr>
+            <td><label th:text="#{msg.ingredient}" /></td>
+            <td><input type="text" th:field="*{ingredient}" /></td>
+        </tr>
+        <tr>
+            <td><label th:text="#{msg.date}" /></td>
+            <td><input type="date" th:field="*{date}" /></td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Submit" /></td>
+        </tr>
+    </table>
+</form>
 </body>
 </html>
