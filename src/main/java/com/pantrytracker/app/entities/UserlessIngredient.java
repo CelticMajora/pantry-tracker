@@ -9,15 +9,12 @@ import javax.persistence.Id;
 
 @Entity
 public class UserlessIngredient {
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	
-	private String email;
-	
-	private String ingredientName;
-	
+	private Long id;	
+	private String email;	
+	private String ingredientName;	
 	private LocalDate expirationDate;
 	
 	public Long getId() {
