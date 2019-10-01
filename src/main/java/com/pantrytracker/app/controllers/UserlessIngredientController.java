@@ -36,12 +36,14 @@ public class UserlessIngredientController {
 	
 	@RequestMapping(value = "/userlessingredient", method = RequestMethod.POST)
 	public @ResponseBody UserlessIngredient postUserlessIngredient(@RequestParam String email,
+			@RequestParam String name,
 			@RequestParam String ingredientName,
 			@RequestParam String expirationYear,
 			@RequestParam String expirationMonth,
 			@RequestParam String expirationDayOfMonth) {
 		UserlessIngredient toStore = new UserlessIngredient();
 		toStore.setEmail(email);
+		toStore.setName(name);
 		toStore.setIngredientName(ingredientName);
 		toStore.setExpirationDate(LocalDate.of(Integer.parseInt(expirationYear),
 				Integer.parseInt(expirationMonth),
