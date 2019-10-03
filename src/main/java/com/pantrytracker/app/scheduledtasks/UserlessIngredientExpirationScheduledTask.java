@@ -1,4 +1,4 @@
-package scheduledtasks;
+package com.pantrytracker.app.scheduledtasks;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
