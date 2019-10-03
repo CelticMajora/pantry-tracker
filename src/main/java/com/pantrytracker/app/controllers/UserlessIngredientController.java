@@ -1,11 +1,13 @@
 package com.pantrytracker.app.controllers;
 
-import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,19 +37,9 @@ public class UserlessIngredientController {
 	}
 	
 	@RequestMapping(value = "/userlessingredient", method = RequestMethod.POST)
-	public @ResponseBody UserlessIngredient postUserlessIngredient(@RequestParam String email,
-			@RequestParam String ingredientName,
-			@RequestParam String expirationYear,
-			@RequestParam String expirationMonth,
-			@RequestParam String expirationDayOfMonth) {
-		UserlessIngredient toStore = new UserlessIngredient();
-		toStore.setEmail(email);
-		toStore.setIngredientName(ingredientName);
-		toStore.setExpirationDate(LocalDate.of(Integer.parseInt(expirationYear),
-				Integer.parseInt(expirationMonth),
-				Integer.parseInt(expirationDayOfMonth)));
-		userlessIngredientRepository.save(toStore);
-		return toStore;
+	public @ResponseBody UserlessIngredient postUserlessIngredient(@ModelAttribute UserlessIngredient userlessIngredient, BindingResult errors, Model model) {
+		userlessIngredientRepository.save(userlessIngredient);
+		return userlessIngredient;
 	}
 	
 	@RequestMapping(value = "/userlessingredient", method = RequestMethod.DELETE)

@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.pantrytracker.app.entities.UserlessIngredient;
+
 @Controller
 public class WebController {
 	@Value("${spring.application.name}")
@@ -13,6 +15,7 @@ public class WebController {
 	@GetMapping("/")
 	public String homePage(Model model) {
 		model.addAttribute("appName", appName);
+		model.addAttribute("userlessIngredient", new UserlessIngredient());
 		return "home";
 	}
 }
