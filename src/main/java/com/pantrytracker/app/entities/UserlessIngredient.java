@@ -14,7 +14,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class UserlessIngredient implements Serializable{
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;	
 	private String email;
 	private String name;
