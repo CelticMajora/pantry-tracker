@@ -3,23 +3,30 @@ package com.pantrytracker.app.entities;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
+@Table(name = "userless_ingredient")
 public class UserlessIngredient implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;	
+	private Long id;
+	@Column(name = "email")
 	private String email;
+	@Column(name = "name")
 	private String name;
+	@Column(name = "ingredientname")
 	private String ingredientName;
 	@DateTimeFormat(pattern = "yyy-MM-dd")
+	@Column(name = "expirationdate")
 	private LocalDate expirationDate;
 	
 	public Long getId() {
