@@ -25,7 +25,7 @@ public class UserlessIngredient implements Serializable{
 	private String name;
 	@Column(name = "ingredientname")
 	private String ingredientName;
-	@DateTimeFormat(pattern = "yyy-MM-dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "expirationdate")
 	private LocalDate expirationDate;
 	
