@@ -5,45 +5,59 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.pantrytracker.app.entities.UserlessIngredient;
 import com.pantrytracker.app.repositories.UserlessIngredientRepository;
 
-@RestController
+@Controller
 public class UserlessIngredientController {
 
 	@Autowired
 	private UserlessIngredientRepository userlessIngredientRepository;
 	
-	@RequestMapping(value = "/userlessingredient", method = RequestMethod.GET)
-	public @ResponseBody List<UserlessIngredient> getUserlessIngredients(@RequestParam String userEmail) {
-		List<UserlessIngredient> toReturn = new LinkedList<UserlessIngredient>();
+	@GetMapping("/")
+	public String homePage(Model model) {
+		model.addAttribute("userlessIngredient", new UserlessIngredient());
+		model.addAttribute("userEmail", new String()); 
+		return "index";
+	}
+	
+	@GetMapping("/userlessingredient")
+	public String getUserlessIngredients(@RequestParam String userEmail, Model model) {
+		List<UserlessIngredient> toDisplay = new LinkedList<UserlessIngredient>();
 		Iterator<UserlessIngredient> iterator = userlessIngredientRepository.findAll().iterator();
 		while(iterator.hasNext()) {
 			UserlessIngredient next = iterator.next();
 			if(next.getEmail().equals(userEmail)) {
-				toReturn.add(next);
+				toDisplay.add(next);
 			}
 		}
-		return toReturn;
+		model.addAttribute("userlessIngredient", new UserlessIngredient());
+		model.addAttribute("userEmail", new String());
+		model.addAttribute("ingredientList", toDisplay);
+		return "index";
 	}
 	
-	@RequestMapping(value = "/userlessingredient", method = RequestMethod.POST)
-	public @ResponseBody UserlessIngredient postUserlessIngredient(@ModelAttribute UserlessIngredient userlessIngredient, BindingResult errors, Model model) {
-		userlessIngredientRepository.save(userlessIngredient);
-		return userlessIngredient;
+	@PostMapping("/userlessingredient")
+	public String postUserlessIngredient(@ModelAttribute UserlessIngredient userlessIngredient, BindingResult errors, Model model) {
+		UserlessIngredient ingredient = userlessIngredientRepository.save(userlessIngredient);
+		if(ingredient != null) {
+			model.addAttribute("saveSuccessful", true);
+			model.addAttribute("userlessIngredient", new UserlessIngredient());
+		}		
+		return "index";
 	}
 	
-	@RequestMapping(value = "/userlessingredient", method = RequestMethod.DELETE)
-	public void deleteUserlessIngredient(@RequestParam String id) {
+	@DeleteMapping("/userlessingredient")
+	public String deleteUserlessIngredient(@RequestParam String id) {
 		userlessIngredientRepository.deleteById(Long.parseLong(id));
+		return "index";
 	}
 }
