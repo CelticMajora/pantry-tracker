@@ -3,19 +3,21 @@
 <body>
 <h1>Hello!</h1>
 <p>Welcome to Pantry Tracker</p>
+<br>
+<b>Enter Ingredients</b>
 <form action="#" th:action="@{/userlessingredient}" th:object="${userlessIngredient}" method="post">
     <table border="1">
         <tr>
-            <td><input type="text" th:field="*{email}" /></td>
+            <td>Email:<input type="text" th:field="*{email}" /></td>
         </tr>
         <tr>
-            <td><input type="text" th:field="*{name}" /></td>
+            <td>Name:<input type="text" th:field="*{name}" /></td>
         </tr>
         <tr>
-            <td><input type="text" th:field="*{ingredientName}" /></td>
+            <td>Ingredient Name<input type="text" th:field="*{ingredientName}" /></td>
         </tr>
         <tr>
-            <td><input type="date" th:field="*{expirationDate}" /></td>
+            <td>Expiration Date<input type="date" th:field="*{expirationDate}" /></td>
         </tr>
         <tr>
             <td><input type="submit" value="Submit" /></td>
@@ -23,15 +25,17 @@
     </table>
 </form>
 <span th:if="${saveSuccessful}">Save Successful</span>
+<br>
+<b>Enter Email to View Current Ingredients</b>
 <form action="#" th:action="@{/userlessingredient}" method="get">
 	<table border="1">
 		<tr>
-			<td><input type="text" th:value="${userEmail}" name="userEmail"/></td>
+			<td>Email:<input type="text" th:value="${userEmail}" name="userEmail"/></td>
 			<td><input type="submit"/></td>
 		</tr>
 	</table>
 </form>
-<table>
+<table th:if="${ingredientList} != null">
     <thead>
         <tr>
             <th> Name </th>
