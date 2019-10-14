@@ -40,7 +40,6 @@ public class UserlessIngredientExpirationScheduledTask {
 		String bodyUnformatted = "Hi %s,\n\nYour %s is/are expiring on %s.\n\nThanks for using Pantry Tracker.\n\n--Pantry Tracker";
 		
 		msg.setTo(userlessIngredient.getEmail());
-		msg.setFrom("noreply@pantry-tracker-prototype.herokuapp.com");
 		msg.setSubject("Expiring Ingredient");
 		msg.setText(String.format(bodyUnformatted,
 				userlessIngredient.getName(),
