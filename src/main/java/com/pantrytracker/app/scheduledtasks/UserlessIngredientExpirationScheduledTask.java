@@ -37,7 +37,7 @@ public class UserlessIngredientExpirationScheduledTask {
 	
 	private void sendEmail(UserlessIngredient userlessIngredient) {
 		SimpleMailMessage msg = new SimpleMailMessage();
-		String bodyUnformatted = "Hi %s,\n\nYour %s is/are expiring on %s.\n\nThanks for using Pantry Tracker.\n\n--Pantry Tracker";
+		String bodyUnformatted = "Hi %s,\n\nYour %s is/are expiring on %s. To manage your ingredients, visit https://pantry-tracker-prototype.herokuapp.com/.\n\nThanks for using Pantry Tracker.\n\n--Pantry Tracker";
 		
 		msg.setTo(userlessIngredient.getEmail());
 		msg.setFrom("noreply@pantry-tracker-prototype.herokuapp.com");
