@@ -23,7 +23,7 @@ public class UserlessIngredientExpirationScheduledTask {
 	@Autowired
 	private JavaMailSender javaMailSender;
 	
-	@Scheduled(cron = "0/5 * * * * *"/*"0 0 8 * * *"*/)
+	@Scheduled(cron = "0 0 8 * * *")
 	public void checkForExpiringIngredientsAndSendReminderEmails() {
 		Iterator<UserlessIngredient> iterator = userlessIngredientRepository.findAll().iterator();
 		LocalDate now = LocalDate.now();
