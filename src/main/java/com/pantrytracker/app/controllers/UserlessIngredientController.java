@@ -40,7 +40,7 @@ public class UserlessIngredientController {
 			}
 		}
 		model.addAttribute("userlessIngredient", new UserlessIngredient());
-		model.addAttribute("userEmail", new String());
+		model.addAttribute("userEmail", userEmail);
 		model.addAttribute("ingredientList", toDisplay);
 		return "index";
 	}
@@ -55,9 +55,11 @@ public class UserlessIngredientController {
 		return "index";
 	}
 	
-	@DeleteMapping("/userlessingredient")
-	public String deleteUserlessIngredient(@RequestParam String id) {
-		userlessIngredientRepository.deleteById(Long.parseLong(id));
+	@PostMapping("/userlessingredient/delete")
+	public String deleteUserlessIngredient(@ModelAttribute UserlessIngredient ingredient, Model model) {
+		userlessIngredientRepository.deleteById(ingredient.getId());
+		model.addAttribute("userlessIngredient", new UserlessIngredient());
+		model.addAttribute("userEmail", new String());
 		return "index";
 	}
 }

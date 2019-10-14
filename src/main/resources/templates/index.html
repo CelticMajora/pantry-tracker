@@ -42,6 +42,7 @@
             <th> Ingredient Name </th>
             <th> Email </th>
             <th> Expiration Date </th>
+            <th> Delete </th>
         </tr>
     </thead>
     <tbody>
@@ -53,6 +54,11 @@
             <td><span th:text="${ingredient.ingredientName}"> Ingredient Name </span></td>
             <td><span th:text="${ingredient.email}"> Email </span></td>
             <td><span th:text="${ingredient.expirationDate}"> Expiration Date </span></td>
+            <td>
+            	<form action="#" th:action="@{/userlessingredient/delete}" th:object="${ingredient}" method="post">
+            		<input type="submit" value="Delete"/>
+            	</form>
+            </td>
         </tr>
     </tbody>
 </table>
