@@ -1,6 +1,7 @@
 package com.pantrytracker.app.scheduledtasks;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Iterator;
 
@@ -22,7 +23,7 @@ public class UserlessIngredientExpirationScheduledTask {
 	@Autowired
 	private JavaMailSender javaMailSender;
 	
-	@Scheduled(cron = "0 0 8 * * *")
+	@Scheduled(cron = "0/5 * * * * *"/*"0 0 8 * * *"*/)
 	public void checkForExpiringIngredientsAndSendReminderEmails() {
 		Iterator<UserlessIngredient> iterator = userlessIngredientRepository.findAll().iterator();
 		LocalDate now = LocalDate.now();
@@ -40,7 +41,10 @@ public class UserlessIngredientExpirationScheduledTask {
 		
 		msg.setTo(userlessIngredient.getEmail());
 		msg.setSubject("Expiring Ingredient");
-		msg.setText(String.format(bodyUnformatted, userlessIngredient.getName(), userlessIngredient.getIngredientName(), userlessIngredient.getExpirationDate().toString()));
+		msg.setText(String.format(bodyUnformatted,
+				userlessIngredient.getName(),
+				userlessIngredient.getIngredientName(),
+				userlessIngredient.getExpirationDate().format(DateTimeFormatter.ofPattern("MM-dd-yyyy")).toString()));
 		
 		javaMailSender.send(msg);
 	}
