@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.pantrytracker.app.entities.UserlessIngredient;
@@ -40,7 +41,7 @@ public class UserlessIngredientController {
 			}
 		}
 		model.addAttribute("userlessIngredient", new UserlessIngredient());
-		model.addAttribute("userEmail", new String());
+		model.addAttribute("userEmail", userEmail);
 		model.addAttribute("ingredientList", toDisplay);
 		return "index";
 	}
@@ -55,9 +56,11 @@ public class UserlessIngredientController {
 		return "index";
 	}
 	
-	@DeleteMapping("/userlessingredient")
-	public String deleteUserlessIngredient(@RequestParam String id) {
-		userlessIngredientRepository.deleteById(Long.parseLong(id));
+	@PostMapping("/userlessingredient/delete")
+	public String deleteUserlessIngredient(@RequestParam Long id, Model model) {
+		userlessIngredientRepository.deleteById(id);
+		model.addAttribute("userlessIngredient", new UserlessIngredient());
+		model.addAttribute("userEmail", new String());
 		return "index";
 	}
 }
