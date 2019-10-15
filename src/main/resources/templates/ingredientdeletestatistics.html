@@ -1,0 +1,4 @@
+<form action="#" th:action="@{/ingredientdeletestatistics}" th:object="${ingredientDeleteStatistics}" method="post">
+	Did you throw away this ingredient?<input type="checkbox" th:field="*{wasTossed}"/>
+	<input type="submit"/>
+</form>
