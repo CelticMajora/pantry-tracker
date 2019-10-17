@@ -1,4 +1,18 @@
-<form action="#" th:action="@{/ingredientdeletestatistics}" th:object="${ingredientDeleteStatistics}" method="post">
-	Did you throw away this ingredient?<input type="checkbox" th:field="*{wasTossed}"/>
-	<input type="submit"/>
-</form>
+<html>
+	<head><title>Pantry Tracker</title></head>
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-148333673-1"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+	
+	  gtag('config', 'UA-148333673-1');
+	</script>
+	<body>
+		<form action="#" th:action="@{/ingredientdeletestatistics}" th:object="${ingredientDeleteStatistics}" method="post">
+			Did you throw away this ingredient?<input type="checkbox" th:field="*{wasTossed}"/>
+			<input type="submit"/>
+		</form>
+	</body>
+</html>

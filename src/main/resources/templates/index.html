@@ -1,72 +1,82 @@
 <html>
-<head><title>Pantry Tracker</title></head>
-<body>
-<h1>Welcome to Pantry Tracker</h1>
-<p>Our vision is to enable individuals to reduce their food waste.</p>
-<p>Log ingredients and foods you have in your pantry and the application will remind you of them 2 days before they expire.</p>
-<br>
-<b>Enter Ingredients</b>
-<form action="#" th:action="@{/userlessingredient}" th:object="${userlessIngredient}" method="post">
-    <table border="1">
-        <tr>
-            <td>Email:<input type="text" th:field="*{email}" /></td>
-        </tr>
-        <tr>
-            <td>Name:<input type="text" th:field="*{name}" /></td>
-        </tr>
-        <tr>
-            <td>Ingredient Name<input type="text" th:field="*{ingredientName}" /></td>
-        </tr>
-        <tr>
-            <td>Expiration Date<input type="date" th:field="*{expirationDate}" /></td>
-        </tr>
-        <tr>
-            <td><input type="submit" value="Submit" /></td>
-        </tr>
-    </table>
-</form>
-<span th:if="${saveSuccessful}">Save Successful</span>
-<br>
-<b>Enter Email to View Current Ingredients</b>
-<form action="#" th:action="@{/userlessingredient}" method="get">
-	<table border="1">
-		<tr>
-			<td>Email:<input type="text" th:value="${userEmail}" name="userEmail"/></td>
-			<td><input type="submit"/></td>
-		</tr>
-	</table>
-</form>
-<table th:if="${ingredientList} != null">
-    <thead>
-        <tr>
-            <th> Name </th>
-            <th> Ingredient Name </th>
-            <th> Email </th>
-            <th> Expiration Date </th>
-            <th> Delete </th>
-        </tr>
-    </thead>
-    <tbody>
-    <tr th:if="${ingredientList?.empty}">
-            <td colspan="2"> No Ingredients Entered </td>
-        </tr>
-        <tr th:each="ingredient : ${ingredientList}">
-            <td><span th:text="${ingredient.name}"> Name </span></td>
-            <td><span th:text="${ingredient.ingredientName}"> Ingredient Name </span></td>
-            <td><span th:text="${ingredient.email}"> Email </span></td>
-            <td><span th:text="${ingredient.expirationDate}"> Expiration Date </span></td>
-            <td>
-            	<form action="#" th:action="@{/userlessingredient/delete?id={id}(id=${ingredient.id})}" th:object="${ingredient}" method="post">
-            		<input type="submit" value="Delete"/>
-            	</form>
-            </td>
-        </tr>
-    </tbody>
-</table>
-<span th:if="${deleteSuccessful}">Delete Successful</span>
-<br>
-<a href="https://forms.gle/XXAEpwQRjMEATGwW8" target="_blank">Report a bug</a>
-<br>
-<a href="https://github.com/CelticMajora/pantry-tracker" target="_blank">View Github</a>
-</body>
+	<head><title>Pantry Tracker</title></head>
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-148333673-1"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+	
+	  gtag('config', 'UA-148333673-1');
+	</script>
+	
+	<body>
+		<h1>Welcome to Pantry Tracker</h1>
+		<p>Our vision is to enable individuals to reduce their food waste.</p>
+		<p>Log ingredients and foods you have in your pantry and the application will remind you of them 2 days before they expire.</p>
+		<br>
+		<b>Enter Ingredients</b>
+		<form action="#" th:action="@{/userlessingredient}" th:object="${userlessIngredient}" method="post">
+		    <table border="1">
+		        <tr>
+		            <td>Email:<input type="text" th:field="*{email}" /></td>
+		        </tr>
+		        <tr>
+		            <td>Name:<input type="text" th:field="*{name}" /></td>
+		        </tr>
+		        <tr>
+		            <td>Ingredient Name<input type="text" th:field="*{ingredientName}" /></td>
+		        </tr>
+		        <tr>
+		            <td>Expiration Date<input type="date" th:field="*{expirationDate}" /></td>
+		        </tr>
+		        <tr>
+		            <td><input type="submit" value="Submit" /></td>
+		        </tr>
+		    </table>
+		</form>
+		<span th:if="${saveSuccessful}">Save Successful</span>
+		<br>
+		<b>Enter Email to View Current Ingredients</b>
+		<form action="#" th:action="@{/userlessingredient}" method="get">
+			<table border="1">
+				<tr>
+					<td>Email:<input type="text" th:value="${userEmail}" name="userEmail"/></td>
+					<td><input type="submit"/></td>
+				</tr>
+			</table>
+		</form>
+		<table th:if="${ingredientList} != null">
+		    <thead>
+		        <tr>
+		            <th> Name </th>
+		            <th> Ingredient Name </th>
+		            <th> Email </th>
+		            <th> Expiration Date </th>
+		            <th> Delete </th>
+		        </tr>
+		    </thead>
+		    <tbody>
+		    <tr th:if="${ingredientList?.empty}">
+		            <td colspan="2"> No Ingredients Entered </td>
+		        </tr>
+		        <tr th:each="ingredient : ${ingredientList}">
+		            <td><span th:text="${ingredient.name}"> Name </span></td>
+		            <td><span th:text="${ingredient.ingredientName}"> Ingredient Name </span></td>
+		            <td><span th:text="${ingredient.email}"> Email </span></td>
+		            <td><span th:text="${ingredient.expirationDate}"> Expiration Date </span></td>
+		            <td>
+		            	<form action="#" th:action="@{/userlessingredient/delete?id={id}(id=${ingredient.id})}" th:object="${ingredient}" method="post">
+		            		<input type="submit" value="Delete"/>
+		            	</form>
+		            </td>
+		        </tr>
+		    </tbody>
+		</table>
+		<span th:if="${deleteSuccessful}">Delete Successful</span>
+		<br>
+		<a href="https://forms.gle/XXAEpwQRjMEATGwW8" target="_blank">Report a bug</a>
+		<br>
+		<a href="https://github.com/CelticMajora/pantry-tracker" target="_blank">View Github</a>
+	</body>
 </html>
