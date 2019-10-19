@@ -1,5 +1,8 @@
 package com.pantrytracker.app.controllers;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,10 +25,23 @@ public class IngredientDeleteStatisticsController {
 		IngredientDeleteStatistics saved = ingredientDeleteStatisticsRepository.save(ingredientDeleteStatistics);
 		if(saved != null) {
 			model.addAttribute("deleteSuccessful", true);
-			model.addAttribute("userlessIngredient", new UserlessIngredient());
 			model.addAttribute("userEmail", new String());
 		}
+		model.addAttribute("userlessIngredient", new UserlessIngredient());
+		model.addAttribute("ratioUsedIngredients", getDeleteStatisticsRatio());
 		return "index";
+	}
+	
+	private String getDeleteStatisticsRatio() {
+		long totalDeletedIngredients = this.ingredientDeleteStatisticsRepository.count();
+		List<IngredientDeleteStatistics> usedUpIngredientDeleteStatistics = new LinkedList<IngredientDeleteStatistics>();
+		this.ingredientDeleteStatisticsRepository.findAll().forEach((IngredientDeleteStatistics ingredientDeleteStatistics) -> {
+			if(!ingredientDeleteStatistics.getWasTossed()) {
+				usedUpIngredientDeleteStatistics.add(ingredientDeleteStatistics);
+			}
+		});
+		long totalUsedUpIngredients = usedUpIngredientDeleteStatistics.size();
+		return String.format("%d/%d", totalUsedUpIngredients, totalDeletedIngredients);
 	}
 
 }

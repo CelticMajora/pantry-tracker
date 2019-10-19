@@ -15,6 +15,8 @@
 		<p>Our vision is to enable individuals to reduce their food waste.</p>
 		<p>Log ingredients and foods you have in your pantry and the application will remind you of them 2 days before they expire.</p>
 		<br>
+		<p>Ratio of ingredients used vs total ingredients deleted: <span th:text="${ratioUsedIngredients}"/></p>
+		<br>
 		<b>Enter Ingredients</b>
 		<form action="#" th:action="@{/userlessingredient}" th:object="${userlessIngredient}" method="post">
 		    <table border="1">
