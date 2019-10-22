@@ -8,6 +8,7 @@
 	
 		<title>Pantry Tracker</title>
 	</head>
+	
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-148333673-1"></script>
 	<script>
@@ -21,13 +22,12 @@
 	<body>
 		<div class="jumbotron text-center">
 			<h1>Welcome to Pantry Tracker</h1>
-			<p>Our vision is to enable individuals to reduce their food waste.</p>
+			<p class="lead">Our vision is to enable individuals to reduce their food waste.</p>
 			<p>Log ingredients and foods you have in your pantry and the application will remind you of them 2 days before they expire.</p>
-			<br>
 			<p>Ratio of ingredients used vs total ingredients deleted: <span th:text="${ratioUsedIngredients}"/></p>
 		</div>
-		<div class="container">
-			<b>Enter Ingredients</b>
+		<div class="container my-5">
+			<h2>Enter Ingredients</h2>
 			<form action="#" th:action="@{/userlessingredient}" th:object="${userlessIngredient}" method="post">
 				<div class="form-group">
 					<label>Email address</label>
@@ -48,10 +48,17 @@
 				</div>
 				<button type="submit" class="btn btn-primary">Submit</button>
 			</form>
-			<span th:if="${saveSuccessful}">Save Successful</span>
+			<span th:if="${saveSuccessful}">				
+				<div class="alert alert-success alert-dismissible fade show" role="alert">
+					<strong>Save Successful</strong>
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+			</span>
 		</div>
-		<div class="container">
-			<b>Enter Email to View Current Ingredients</b>
+		<div class="container my-5">
+			<h2>Enter Email to View Current Ingredients</h2>
 			<form action="#" th:action="@{/userlessingredient}" method="get">
 				<div class="form-group">
 					<label>Email</label>
@@ -59,7 +66,7 @@
 				</div>
 				<button type="submit" class="btn btn-primary">Submit</button>
 			</form>
-			<table class="table" th:if="${ingredientList} != null">
+			<table class="table table-striped" th:if="${ingredientList} != null">
 			    <thead>
 			        <tr>
 			            <th> Name </th>
@@ -86,9 +93,17 @@
 			        </tr>
 			    </tbody>
 			</table>
-			<span th:if="${deleteSuccessful}">Delete Successful</span>
+			<span th:if="${deleteSuccessful}">			
+				<div class="alert alert-success alert-dismissible fade show" role="alert">
+					<strong>Delete Successful</strong>
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+			</span>
 		</div>
-		<div class="container">
+		<div class="container my-5">
+			<h6>Help with development</h6>
 			<a href="https://forms.gle/XXAEpwQRjMEATGwW8" class="btn btn-primary" target="_blank">Report a bug</a>
 			<a href="https://github.com/CelticMajora/pantry-tracker" class="btn btn-primary" target="_blank">View Github</a>	
 		</div>
