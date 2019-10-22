@@ -19,8 +19,11 @@
 	</script>
 	<body>
 		<form action="#" th:action="@{/ingredientdeletestatistics}" th:object="${ingredientDeleteStatistics}" method="post">
-			Did you throw away this ingredient?<input type="checkbox" th:field="*{wasTossed}"/>
-			<input type="submit"/>
+			<div class="form-check">
+				<input class="form-check-input" type="checkbox" th:field="*{wasTossed}"/>
+				<label class="form-check-label">Did you throw away this ingredient?</label>
+			</div>
+			<button class="btn btn-primary" type="submit">Submit</button>
 		</form>		
 	</body>
 </html>
