@@ -15,7 +15,7 @@ import com.pantrytracker.app.entities.UserlessIngredient;
 import com.pantrytracker.app.repositories.UserlessIngredientRepository;
 
 @Component
-public class UserlessIngredientExpirationScheduledTask {
+public class UserlessIngredientExpiredScheduledTask {
 	
 	@Autowired
 	private UserlessIngredientRepository userlessIngredientRepository;
@@ -23,28 +23,29 @@ public class UserlessIngredientExpirationScheduledTask {
 	@Autowired
 	private JavaMailSender javaMailSender;
 	
-	@Scheduled(cron = "0 0 8 * * *")
-	public void checkForExpiringIngredientsAndSendReminderEmails() {
+	@Scheduled(cron = "0 0 8 */2 * *")
+	public void checkForExpiredIngredientsAndSendReminderEmails() {
 		Iterator<UserlessIngredient> iterator = userlessIngredientRepository.findAll().iterator();
 		LocalDate now = LocalDate.now();
 		while(iterator.hasNext()) {
 			UserlessIngredient next = iterator.next();
-			if(now.until(next.getExpirationDate(), ChronoUnit.DAYS) <= 2 && now.until(next.getExpirationDate(), ChronoUnit.DAYS) >= 0) {
-				sendExpiringEmail(next);
+			if(now.until(next.getExpirationDate(), ChronoUnit.DAYS) < 0) {
+				sendExpiredEmail(next);
 			}
 		}
 	}
 	
-	private void sendExpiringEmail(UserlessIngredient userlessIngredient) {
+	private void sendExpiredEmail(UserlessIngredient userlessIngredient) {
 		SimpleMailMessage msg = new SimpleMailMessage();
-		String bodyUnformatted = "Hi %s,\n\nYour %s is/are expiring on %s. To manage your ingredients, visit https://pantry-tracker-prototype.herokuapp.com/.\n\nThanks for using Pantry Tracker.\n\n--Pantry Tracker";
+		String bodyUnformatted = "Hi %s,\n\nYour %s expired on %s. To delete this ingredient from your pantry, visit https://pantry-tracker-prototype.herokuapp.com/userlessingredient/delete?id=%d.\n\nThanks for using Pantry Tracker.\n\n--Pantry Tracker";
 		
 		msg.setTo(userlessIngredient.getEmail());
-		msg.setSubject("Expiring Ingredient");
+		msg.setSubject("Expired Ingredient");
 		msg.setText(String.format(bodyUnformatted,
 				userlessIngredient.getName(),
 				userlessIngredient.getIngredientName(),
-				userlessIngredient.getExpirationDate().format(DateTimeFormatter.ofPattern("MM-dd-yyyy")).toString()));
+				userlessIngredient.getExpirationDate().format(DateTimeFormatter.ofPattern("MM-dd-yyyy")).toString(),
+				userlessIngredient.getId().longValue()));
 		
 		javaMailSender.send(msg);
 	}
