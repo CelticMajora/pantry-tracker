@@ -29,18 +29,43 @@ public class UserlessIngredientExpirationScheduledTask {
 		LocalDate now = LocalDate.now();
 		while(iterator.hasNext()) {
 			UserlessIngredient next = iterator.next();
-			if(now.until(next.getExpirationDate(), ChronoUnit.DAYS) <= 2) {
-				sendEmail(next);
+			if(now.until(next.getExpirationDate(), ChronoUnit.DAYS) <= 2 && now.until(next.getExpirationDate(), ChronoUnit.DAYS) >= 0) {
+				sendExpiringEmail(next);
 			}
 		}
 	}
 	
-	private void sendEmail(UserlessIngredient userlessIngredient) {
+	@Scheduled(cron = "0 0 8 1/2 * *")
+	public void checkForExpiredIngredientsAndSendReminderEmails() {
+		Iterator<UserlessIngredient> iterator = userlessIngredientRepository.findAll().iterator();
+		LocalDate now = LocalDate.now();
+		while(iterator.hasNext()) {
+			UserlessIngredient next = iterator.next();
+			if(now.until(next.getExpirationDate(), ChronoUnit.DAYS) < 0) {
+				sendExpiredEmail(next);
+			}
+		}
+	}
+	
+	private void sendExpiredEmail(UserlessIngredient userlessIngredient) {
+		SimpleMailMessage msg = new SimpleMailMessage();
+		String bodyUnformatted = "Hi %s,\n\nYour %s expired on %s. To manage your ingredients, visit https://pantry-tracker-prototype.herokuapp.com/.\n\nThanks for using Pantry Tracker.\n\n--Pantry Tracker";
+		
+		msg.setTo(userlessIngredient.getEmail());
+		msg.setSubject("Expired Ingredient");
+		msg.setText(String.format(bodyUnformatted,
+				userlessIngredient.getName(),
+				userlessIngredient.getIngredientName(),
+				userlessIngredient.getExpirationDate().format(DateTimeFormatter.ofPattern("MM-dd-yyyy")).toString()));
+		
+		javaMailSender.send(msg);
+	}
+	
+	private void sendExpiringEmail(UserlessIngredient userlessIngredient) {
 		SimpleMailMessage msg = new SimpleMailMessage();
 		String bodyUnformatted = "Hi %s,\n\nYour %s is/are expiring on %s. To manage your ingredients, visit https://pantry-tracker-prototype.herokuapp.com/.\n\nThanks for using Pantry Tracker.\n\n--Pantry Tracker";
 		
 		msg.setTo(userlessIngredient.getEmail());
-		msg.setFrom("noreply@pantry-tracker-prototype.herokuapp.com");
 		msg.setSubject("Expiring Ingredient");
 		msg.setText(String.format(bodyUnformatted,
 				userlessIngredient.getName(),
