@@ -49,14 +49,15 @@ public class UserlessIngredientExpirationScheduledTask {
 	
 	private void sendExpiredEmail(UserlessIngredient userlessIngredient) {
 		SimpleMailMessage msg = new SimpleMailMessage();
-		String bodyUnformatted = "Hi %s,\n\nYour %s expired on %s. To manage your ingredients, visit https://pantry-tracker-prototype.herokuapp.com/.\n\nThanks for using Pantry Tracker.\n\n--Pantry Tracker";
+		String bodyUnformatted = "Hi %s,\n\nYour %s expired on %s. To delete this ingredient from your pantry, visit https://pantry-tracker-prototype.herokuapp.com/userlessingredient/delete?id=%d.\n\nThanks for using Pantry Tracker.\n\n--Pantry Tracker";
 		
 		msg.setTo(userlessIngredient.getEmail());
 		msg.setSubject("Expired Ingredient");
 		msg.setText(String.format(bodyUnformatted,
 				userlessIngredient.getName(),
 				userlessIngredient.getIngredientName(),
-				userlessIngredient.getExpirationDate().format(DateTimeFormatter.ofPattern("MM-dd-yyyy")).toString()));
+				userlessIngredient.getExpirationDate().format(DateTimeFormatter.ofPattern("MM-dd-yyyy")).toString(),
+				userlessIngredient.getId()));
 		
 		javaMailSender.send(msg);
 	}
