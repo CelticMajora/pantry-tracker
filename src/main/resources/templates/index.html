@@ -19,93 +19,97 @@
 	  gtag('config', 'UA-148333673-1');
 	</script>
 	
-	<body>
-		<div class="jumbotron text-center">
-			<h1>Welcome to Pantry Tracker</h1>
-			<p class="lead">Our vision is to enable individuals to reduce their food waste.</p>
-			<p>Log ingredients and foods you have in your pantry and the application will remind you of them 2 days before they expire.</p>
-			<p>Ratio of ingredients used vs total ingredients deleted: <span th:text="${ratioUsedIngredients}"/></p>
-		</div>
-		<div class="container my-5">
-			<h2>Enter Ingredients</h2>
-			<form action="#" th:action="@{/userlessingredient}" th:object="${userlessIngredient}" method="post">
-				<div class="form-group">
-					<label>Email address</label>
-					<input class="form-control" type="text" th:field="*{email}" placeholder="Enter email"/>
-					<small class="form-text text-muted">This will be used to contact you regarding expiration.</small>
-				</div>
-				<div class="form-group">
-					<label>Name</label>
-					<input class="form-control" type="text" th:field="*{name}" placeholder="Enter name"/>
-				</div>
-				<div class="form-group">
-					<label>Ingredient Name</label>
-					<input class="form-control" type="text" th:field="*{ingredientName}" placeholder="Enter ingredient name"/>
-				</div>
-				<div class="form-group">
-					<label>Expiration Date</label>
-					<input class="form-control" type="date" th:field="*{expirationDate}"/>
-				</div>
-				<button type="submit" class="btn btn-primary">Submit</button>
-			</form>
-			<span th:if="${saveSuccessful}">				
-				<div class="alert alert-success alert-dismissible fade show" role="alert">
-					<strong>Save Successful</strong>
-					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-			</span>
-		</div>
-		<div class="container my-5">
-			<h2>Enter Email to View Current Ingredients</h2>
-			<form action="#" th:action="@{/userlessingredient}" method="get">
-				<div class="form-group">
-					<label>Email</label>
-					<input class="form-control" type="text" th:value="${userEmail}" name="userEmail"/>
-				</div>
-				<button type="submit" class="btn btn-primary">Submit</button>
-			</form>
-			<table class="table table-striped" th:if="${ingredientList} != null">
-			    <thead>
-			        <tr>
-			            <th> Name </th>
-			            <th> Ingredient Name </th>
-			            <th> Email </th>
-			            <th> Expiration Date </th>
-			            <th> Delete </th>
-			        </tr>
-			    </thead>
-			    <tbody>
-			    <tr th:if="${ingredientList?.empty}">
-			            <td colspan="2"> No Ingredients Entered </td>
-			        </tr>
-			        <tr th:each="ingredient : ${ingredientList}">
-			            <td><span th:text="${ingredient.name}"> Name </span></td>
-			            <td><span th:text="${ingredient.ingredientName}"> Ingredient Name </span></td>
-			            <td><span th:text="${ingredient.email}"> Email </span></td>
-			            <td><span th:text="${ingredient.expirationDate}"> Expiration Date </span></td>
-			            <td>
-			            	<form action="#" th:action="@{/userlessingredient/delete?id={id}(id=${ingredient.id})}" th:object="${ingredient}" method="post">
-			            		<button type="submit" class="btn btn-danger">Delete</button>
-			            	</form>
-			            </td>
-			        </tr>
-			    </tbody>
-			</table>
-			<span th:if="${deleteSuccessful}">			
-				<div class="alert alert-success alert-dismissible fade show" role="alert">
-					<strong>Delete Successful</strong>
-					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-			</span>
-		</div>
-		<div class="container my-5">
-			<h6>Help with development</h6>
-			<a href="https://forms.gle/XXAEpwQRjMEATGwW8" class="btn btn-primary" target="_blank">Report a bug</a>
-			<a href="https://github.com/CelticMajora/pantry-tracker" class="btn btn-primary" target="_blank">View Github</a>	
-		</div>
+	<body style="height: 100%" class="d-flex flex-column">
+		<div style="flex: 1 0 auto">
+			<div class="jumbotron text-center">
+				<h1>Welcome to Pantry Tracker</h1>
+				<p class="lead">Our vision is to enable individuals to reduce their food waste.</p>
+				<p>Log ingredients and foods you have in your pantry and the application will remind you of them 2 days before they expire.</p>
+				<p>Ratio of ingredients used vs total ingredients deleted: <span th:text="${ratioUsedIngredients}"/></p>
+			</div>
+			<div class="container my-5">
+				<h2>Enter Ingredients</h2>
+				<form action="#" th:action="@{/userlessingredient}" th:object="${userlessIngredient}" method="post">
+					<div class="form-group">
+						<label>Email address</label>
+						<input class="form-control" type="text" th:field="*{email}" placeholder="Enter email"/>
+						<small class="form-text text-muted">This will be used to contact you regarding expiration.</small>
+					</div>
+					<div class="form-group">
+						<label>Name</label>
+						<input class="form-control" type="text" th:field="*{name}" placeholder="Enter name"/>
+					</div>
+					<div class="form-group">
+						<label>Ingredient Name</label>
+						<input class="form-control" type="text" th:field="*{ingredientName}" placeholder="Enter ingredient name"/>
+					</div>
+					<div class="form-group">
+						<label>Expiration Date</label>
+						<input class="form-control" type="date" th:field="*{expirationDate}"/>
+					</div>
+					<button type="submit" class="btn btn-primary">Submit</button>
+				</form>
+				<span th:if="${saveSuccessful}">				
+					<div class="alert alert-success alert-dismissible fade show" role="alert">
+						<strong>Save Successful</strong>
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				</span>
+			</div>
+			<div class="container my-5">
+				<h2>Enter Email to View Current Ingredients</h2>
+				<form action="#" th:action="@{/userlessingredient}" method="get">
+					<div class="form-group">
+						<label>Email</label>
+						<input class="form-control" type="text" th:value="${userEmail}" name="userEmail"/>
+					</div>
+					<button type="submit" class="btn btn-primary">Submit</button>
+				</form>
+				<table class="table table-striped" th:if="${ingredientList} != null">
+				    <thead>
+				        <tr>
+				            <th> Name </th>
+				            <th> Ingredient Name </th>
+				            <th> Email </th>
+				            <th> Expiration Date </th>
+				            <th> Delete </th>
+				        </tr>
+				    </thead>
+				    <tbody>
+				    <tr th:if="${ingredientList?.empty}">
+				            <td colspan="2"> No Ingredients Entered </td>
+				        </tr>
+				        <tr th:each="ingredient : ${ingredientList}">
+				            <td><span th:text="${ingredient.name}"> Name </span></td>
+				            <td><span th:text="${ingredient.ingredientName}"> Ingredient Name </span></td>
+				            <td><span th:text="${ingredient.email}"> Email </span></td>
+				            <td><span th:text="${ingredient.expirationDate}"> Expiration Date </span></td>
+				            <td>
+				            	<form action="#" th:action="@{/userlessingredient/delete?id={id}(id=${ingredient.id})}" th:object="${ingredient}" method="post">
+				            		<button type="submit" class="btn btn-danger">Delete</button>
+				            	</form>
+				            </td>
+				        </tr>
+				    </tbody>
+				</table>
+				<span th:if="${deleteSuccessful}">			
+					<div class="alert alert-success alert-dismissible fade show" role="alert">
+						<strong>Delete Successful</strong>
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				</span>
+			</div>
+		</div>		
+		<footer style="flex-shrink: none" class="py-1 bg-dark text-white">
+			<div class="container my-3">
+				<h6>Help with development</h6>
+				<a href="https://forms.gle/XXAEpwQRjMEATGwW8" class="btn btn-primary" target="_blank">Report a bug</a>
+				<a href="https://github.com/CelticMajora/pantry-tracker" class="btn btn-primary" target="_blank">View Github</a>	
+			</div>
+		</footer>
 	</body>
 </html>

@@ -19,21 +19,30 @@
 	  gtag('config', 'UA-148333673-1');
 	</script>
 	
-	<body>
-		<div class="jumbotron text-center">
-			<h1>Welcome to Pantry Tracker</h1>
-			<p class="lead">Our vision is to enable individuals to reduce their food waste.</p>
-			<p>Log ingredients and foods you have in your pantry and the application will remind you of them 2 days before they expire.</p>
-		</div>
-		<div class="container">
-			<h2>Food Waste Survey</h2>
-			<form action="#" th:action="@{/ingredientdeletestatistics}" th:object="${ingredientDeleteStatistics}" method="post">
-				<div class="form-check">
-					<input class="form-check-input" type="checkbox" th:field="*{wasTossed}"/>
-					<label class="form-check-label">Did you throw away this ingredient?</label>
-				</div>
-				<button class="btn btn-primary" type="submit">Submit</button>
-			</form>
-		</div>			
+	<body style="height: 100%" class="d-flex flex-column">
+		<div style="flex: 1 0 auto">
+			<div class="jumbotron text-center">
+				<h1>Welcome to Pantry Tracker</h1>
+				<p class="lead">Our vision is to enable individuals to reduce their food waste.</p>
+				<p>Log ingredients and foods you have in your pantry and the application will remind you of them 2 days before they expire.</p>
+			</div>
+			<div class="container">
+				<h2>Food Waste Survey</h2>
+				<form action="#" th:action="@{/ingredientdeletestatistics}" th:object="${ingredientDeleteStatistics}" method="post">
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" th:field="*{wasTossed}"/>
+						<label class="form-check-label">Did you throw away this ingredient?</label>
+					</div>
+					<button class="btn btn-primary" type="submit">Submit</button>
+				</form>
+			</div>
+		</div>		
+		<footer style="flex-shrink: none" class="py-1 bg-dark text-white">
+			<div class="container my-3">
+				<h6>Help with development</h6>
+				<a href="https://forms.gle/XXAEpwQRjMEATGwW8" class="btn btn-primary" target="_blank">Report a bug</a>
+				<a href="https://github.com/CelticMajora/pantry-tracker" class="btn btn-primary" target="_blank">View Github</a>	
+			</div>
+		</footer>		
 	</body>
 </html>
