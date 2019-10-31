@@ -65,7 +65,16 @@ public class UserlessIngredientController {
 	}
 	
 	@PostMapping("/userlessingredient/delete")
-	public String deleteUserlessIngredient(@RequestParam Long id, Model model) {
+	public String deleteUserlessIngredientForm(@RequestParam Long id, Model model) {
+		return delete(id, model);
+	}
+	
+	@GetMapping("/userlessingredient/delete")
+	public String deleteUserlessIngredientLink(@RequestParam Long id, Model model) {
+		return delete(id, model);
+	}
+	
+	private String delete(Long id, Model model) {
 		userlessIngredientRepository.deleteById(id);
 		model.addAttribute("ingredientDeleteStatistics", new IngredientDeleteStatistics());
 		return "ingredientdeletestatistics";
