@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.pantrytracker.app.entities.IngredientDeleteStatistics;
 import com.pantrytracker.app.entities.UserlessIngredient;
-import com.pantrytracker.app.repositories.IngredientDeleteStatisticsRepository;
 import com.pantrytracker.app.repositories.UserlessIngredientRepository;
+import com.pantrytracker.app.services.DeleteStatisticsRatioService;
 
 @Controller
 public class UserlessIngredientController {
@@ -25,13 +25,13 @@ public class UserlessIngredientController {
 	private UserlessIngredientRepository userlessIngredientRepository;
 	
 	@Autowired
-	private IngredientDeleteStatisticsRepository ingredientDeleteStatisticsRepository;
+	private DeleteStatisticsRatioService deleteStatisticsRatioService;
 	
 	@GetMapping("/")
 	public String homePage(Model model) {
 		model.addAttribute("userlessIngredient", new UserlessIngredient());
 		model.addAttribute("userEmail", new String());
-		model.addAttribute("ratioUsedIngredients", getDeleteStatisticsRatio());
+		model.addAttribute("ratioUsedIngredients", deleteStatisticsRatioService.getDeleteStatisticsRatio());
 		return "index";
 	}
 	
@@ -47,7 +47,7 @@ public class UserlessIngredientController {
 		}
 		model.addAttribute("userlessIngredient", new UserlessIngredient());
 		model.addAttribute("userEmail", userEmail);
-		model.addAttribute("ratioUsedIngredients", getDeleteStatisticsRatio());
+		model.addAttribute("ratioUsedIngredients", deleteStatisticsRatioService.getDeleteStatisticsRatio());
 		model.addAttribute("ingredientList", toDisplay);
 		return "index";
 	}
@@ -60,7 +60,7 @@ public class UserlessIngredientController {
 			model.addAttribute("userlessIngredient", new UserlessIngredient());
 		}
 		model.addAttribute("userEmail", new String());
-		model.addAttribute("ratioUsedIngredients", getDeleteStatisticsRatio());
+		model.addAttribute("ratioUsedIngredients", deleteStatisticsRatioService.getDeleteStatisticsRatio());
 		return "index";
 	}
 	
@@ -77,18 +77,7 @@ public class UserlessIngredientController {
 	private String delete(Long id, Model model) {
 		userlessIngredientRepository.deleteById(id);
 		model.addAttribute("ingredientDeleteStatistics", new IngredientDeleteStatistics());
+		model.addAttribute("ratioUsedIngredients", deleteStatisticsRatioService.getDeleteStatisticsRatio());
 		return "ingredientdeletestatistics";
-	}
-	
-	private String getDeleteStatisticsRatio() {
-		long totalDeletedIngredients = this.ingredientDeleteStatisticsRepository.count();
-		List<IngredientDeleteStatistics> usedUpIngredientDeleteStatistics = new LinkedList<IngredientDeleteStatistics>();
-		this.ingredientDeleteStatisticsRepository.findAll().forEach((IngredientDeleteStatistics ingredientDeleteStatistics) -> {
-			if(!ingredientDeleteStatistics.getWasTossed()) {
-				usedUpIngredientDeleteStatistics.add(ingredientDeleteStatistics);
-			}
-		});
-		long totalUsedUpIngredients = usedUpIngredientDeleteStatistics.size();
-		return String.format("%d/%d", totalUsedUpIngredients, totalDeletedIngredients);
 	}
 }
