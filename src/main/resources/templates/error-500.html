@@ -23,25 +23,14 @@
 	</script>
 	
 	<body style="height: 100%" class="d-flex flex-column">
+		<header th:replace="fragments/header :: header"></header>
 		<div style="flex: 1 0 auto">
-			<div class="jumbotron text-center">
-				<h1>Welcome to Pantry Tracker</h1>
-				<p class="lead">Our vision is to enable individuals to reduce their food waste.</p>
-				<p>Log ingredients and foods you have in your pantry and the application will remind you of them 2 days before they expire.</p>
-			</div>
 			<div class="container">
 				<h1>🤕Our server is experiencing issues🤕</h1>
 				<a href="https://forms.gle/XXAEpwQRjMEATGwW8" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Report the bug</a>
 				<a href="https://pantry-tracker-prototype.herokuapp.com/" class="btn btn-primary">Return to the home page</a>
 			</div>
 		</div>		
-		<footer style="flex-shrink: none" class="py-1 bg-dark text-white">
-			<div class="container my-3">
-				<h6>Help with development</h6>
-				<a href="https://forms.gle/XXAEpwQRjMEATGwW8" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Report a Bug</a>
-				<a href="https://www.patreon.com/CelticMajora" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Sponsor Development</a>
-				<a href="https://github.com/CelticMajora/pantry-tracker" class="btn btn-primary" target="_blank" rel="noopener noreferrer">View on Github</a>	
-			</div>
-		</footer>		
+		<footer th:replace="fragments/footer :: footer"></footer>	
 	</body>
 </html>
