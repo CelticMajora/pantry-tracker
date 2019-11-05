@@ -1,0 +1,6 @@
+<header class="jumbotron text-center" th:fragment="header">
+	<h1>Welcome to Pantry Tracker</h1>
+	<p class="lead">Our vision is to enable individuals to reduce their food waste.</p>
+	<p>Log ingredients and foods you have in your pantry and the application will remind you of them 2 days before they expire.</p>
+	<p th:if="${ratioUsedIngredients}">Ratio of ingredients used vs total ingredients deleted: <span th:text="${ratioUsedIngredients}"/></p>
+</header>
